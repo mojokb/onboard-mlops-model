@@ -1,0 +1,8 @@
+dataset/*
+model/*
+.ipynb_checkpoints
+.ipython
+.jupyter
+.local
+.viminfo
+.gitconfig
