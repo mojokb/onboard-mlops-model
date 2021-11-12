@@ -1,0 +1,7 @@
+[core]
+    remote = minio
+['remote "minio"']
+    url = s3://torch-model
+    endpointurl = http://192.168.64.5:32090
+    access_key_id = CKsJYM98M0SiaOGW5UsL
+    secret_access_key = 9yasu04N9O1YyaECy6vzDqMHElKknv2tQRPpQJqi

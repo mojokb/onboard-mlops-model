@@ -8,3 +8,6 @@ model/*
 .local
 .viminfo
 .gitconfig
+.vim
+!*.dvc
+.cache
