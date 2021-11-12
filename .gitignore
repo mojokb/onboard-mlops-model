@@ -1,5 +1,7 @@
 dataset/*
 model/*
+!dataset/README.md
+!model/README.md
 .ipynb_checkpoints
 .ipython
 .jupyter
