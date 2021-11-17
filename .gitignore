@@ -8,4 +8,5 @@ model/*
 .local
 .viminfo
 .gitconfig
+__pycache__
 !*.dvc
