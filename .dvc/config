@@ -1,0 +1,7 @@
+[core]
+    remote = minio
+['remote "minio"']
+    url = s3://mlops-model
+    endpointurl = http://kf.zipsacoding.com:31192
+    access_key_id = pgUO5PzgLnfEHEj6xp9C
+    secret_access_key = 7LuDZSHdo7CnVM5Zq83JscaEFh4E5xvTDEEbfXum
