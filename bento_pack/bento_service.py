@@ -11,5 +11,5 @@ class PytorchModelService(bentoml.BentoService):
     @REQUEST_TIME.time()
     @bentoml.api(input=ImageInput(), batch=True)
     def predict(self, imgs):
-        outputs = self.artifacts.net(imgs)
+        outputs = self.artifacts.model(imgs)
         return outputs
