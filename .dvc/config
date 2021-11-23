@@ -2,6 +2,6 @@
     remote = minio
 ['remote "minio"']
     url = s3://mlops-model
-    endpointurl = http://kf.zipsacoding.com:31192
-    access_key_id = pgUO5PzgLnfEHEj6xp9C
-    secret_access_key = 7LuDZSHdo7CnVM5Zq83JscaEFh4E5xvTDEEbfXum
+    endpointurl = http://192.168.64.5:32008
+    access_key_id = aimmo_access_key
+    secret_access_key = aimmo_secret_key
