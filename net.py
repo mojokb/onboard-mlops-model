@@ -6,13 +6,11 @@ import torch.nn.functional as F
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(784, 512)
-        self.fc2 = nn.Linear(512, 256)
-        self.fc3 = nn.Linear(256, 10)
+        self.fc1 = nn.Linear(784, 128)
+        self.fc2 = nn.Linear(128, 10)
 
     def forward(self, x):
         x = x.float()
         h1 = F.relu(self.fc1(x.view(-1, 784)))
-        h2 = F.relu(self.fc2(h1))
-        h3 = self.fc3(h2)
-        return F.log_softmax(h3, dim=1)
+        h2 = self.fc2(h1)
+        return h2 #F.softmax(h2, dim=1)
