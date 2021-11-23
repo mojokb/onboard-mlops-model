@@ -1,7 +1,7 @@
 [core]
     remote = minio
 ['remote "minio"']
-    url = s3://mlops-model
+    url = s3://torch-model
     endpointurl = http://192.168.64.5:32008
     access_key_id = aimmo_access_key
     secret_access_key = aimmo_secret_key
