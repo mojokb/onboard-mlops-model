@@ -1,4 +1,4 @@
-dataset/*
+dataset/**
 model/*
 !dataset/processed/*.dvc
 !dataset/README.md
