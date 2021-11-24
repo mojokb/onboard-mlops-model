@@ -1,6 +1,7 @@
 dataset/*
 model/*
 !dataset/README.md
+!dataset/processed/README.md
 !model/README.md
 .ipynb_checkpoints
 .ipython
