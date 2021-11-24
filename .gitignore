@@ -1,5 +1,6 @@
 dataset/*
 model/*
+!dataset/processed/*.dvc
 !dataset/README.md
 !dataset/processed/README.md
 !model/README.md
@@ -10,4 +11,4 @@ model/*
 .viminfo
 .gitconfig
 __pycache__
-!*.dvc
+!**/*.dvc
