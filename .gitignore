@@ -1,8 +1,8 @@
-dataset/**
-model/*
+dataset/*
 !dataset/processed/*.dvc
 !dataset/README.md
 !dataset/processed/README.md
+model/*
 !model/README.md
 .ipynb_checkpoints
 .ipython
@@ -11,4 +11,4 @@ model/*
 .viminfo
 .gitconfig
 __pycache__
-!**/*.dvc
+!*.dvc

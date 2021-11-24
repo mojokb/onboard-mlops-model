@@ -1,1 +1,4 @@
-## dataset  
+## dataset
+### structure
+- raw
+- processed 
