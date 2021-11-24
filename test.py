@@ -1,11 +1,12 @@
 import torch
-from torchvision import datasets, transforms
+from torchvision import transforms
 from itertools import chain
 from sklearn.metrics import f1_score
+from onboard_dataset import OnboardDataset
 
 
 class TestModel:
-    def __init__(self):
+    def __init__(self, testset_base='/workdir'):
         self.classes = 10
         no_cuda = True
         use_cuda = not no_cuda and torch.cuda.is_available()
@@ -20,7 +21,8 @@ class TestModel:
 
         test_batch_size = 1000
         self.test_loader = torch.utils.data.DataLoader(
-            datasets.MNIST('./dataset', train=False, download=True, transform=mnist_transform),
+            OnboardDataset(path=f'{testset_base}/dataset/processed/test_set.npz', 
+                           transform=mnist_transform),
             batch_size=test_batch_size, shuffle=True, **kwargs)
 
     def load_model(self, path="/workdir/model/model.pt"):
@@ -50,7 +52,7 @@ class TestModel:
 
 
 if __name__ == "__main__":
-    test_model = TestModel()
-    test_model.load_model("./model.pt")
+    test_model = TestModel(testset_base=".")
+    test_model.load_model("./model/model.pt")
     print(test_model.test())
 
