@@ -1,4 +1,5 @@
 import bentoml
+
 from torchvision import transforms
 from net import Net
 from bentoml.adapters import ImageInput
