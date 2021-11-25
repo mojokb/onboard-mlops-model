@@ -13,4 +13,4 @@ class Net(nn.Module):
         x = x.float()
         h1 = F.relu(self.fc1(x.view(-1, 784)))
         h2 = self.fc2(h1)
-        return h2 #F.softmax(h2, dim=1)
+        return h2
