@@ -1,5 +1,5 @@
 dataset/*
-!dataset/processed/*.dvc
+dataset/processed/*.npz
 !dataset/README.md
 !dataset/processed/README.md
 model/*
