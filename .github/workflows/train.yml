@@ -41,6 +41,8 @@ jobs:
             spec:
               arguments:
                 parameters:
+                  - name: servicename 
+                    value: "$GITHUB_ACTOR-$GITHUB_SHA"
                   - name: branch
                     value: "$GITHUB_REF_NAME"
                   - name: remote_repo
