@@ -1,4 +1,5 @@
-dataset/*
+dataset/raw
+dataset/MNIST
 dataset/processed/*.npz
 !dataset/README.md
 !dataset/processed/README.md
