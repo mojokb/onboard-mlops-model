@@ -12,7 +12,7 @@ REQUEST_TIME = Summary(name='predict_request_processing_time',
                        namespace='BENTOML')
 
 
-@bentoml.env(pip_packages=["torch", "torchvision", "imageio"])
+@bentoml.env(pip_packages=["torch", "torchvision", "imageio==2.10.3"])
 @bentoml.artifacts([PytorchModelArtifact('model')])
 class PytorchModelService(bentoml.BentoService):
 
