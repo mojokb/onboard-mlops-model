@@ -4,7 +4,7 @@ from net import Net
 from bento_service import PytorchModelService
 
 BENTO_PACK_PATH = '/workdir/bentoml'
-PATH = './model/model.pt'
+PATH = './models/model.pt'
 
 model = torch.load(PATH)
 model.eval()

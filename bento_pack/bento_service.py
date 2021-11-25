@@ -1,6 +1,6 @@
 import bentoml
 from torchvision import transforms
-from net import Net
+from src.models.net import Net
 from bentoml.adapters import ImageInput
 from bentoml.frameworks.pytorch import PytorchModelArtifact
 from prometheus_client import Summary
