@@ -42,7 +42,7 @@ jobs:
               arguments:
                 parameters:
                   - name: servicename 
-                    value: "$GITHUB_ACTOR-$GITHUB_SHA"
+                    value: "${GITHUB_REPOSITORY#*/}"
                   - name: branch
                     value: "$GITHUB_REF_NAME"
                   - name: remote_repo
