@@ -1,10 +1,10 @@
-dataset/raw
-dataset/MNIST
-dataset/processed/*.npz
-!dataset/README.md
-!dataset/processed/README.md
-model/*
-!model/README.md
+data/raw
+data/MNIST
+data/processed/*.npz
+!data/README.md
+!data/processed/README.md
+models/*
+!models/README.md
 .ipynb_checkpoints
 .ipython
 .jupyter

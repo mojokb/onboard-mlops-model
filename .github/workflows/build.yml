@@ -1,13 +1,13 @@
 # This is a basic workflow that is manually triggered
 
-name: train
+name: build
 on:
   push:
     branches:
       - 'train/*'
     paths:
-      - 'model/*.dvc'      
-      - 'dataset/processed/*.dvc'  
+      - 'models/*.dvc'      
+      - 'data/processed/*.dvc'  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
