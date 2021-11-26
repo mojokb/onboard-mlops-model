@@ -3,7 +3,7 @@ from torchvision import transforms
 from src.models.net import Net
 from bentoml.adapters import ImageInput
 from bentoml.frameworks.pytorch import PytorchModelArtifact
-from prometheus_client import Summary
+from prometheus_client import Summary, Gauge, Counter
 import torch
 import torch.nn.functional as f
 
@@ -11,6 +11,9 @@ REQUEST_TIME = Summary(name='predict_request_processing_time',
                        documentation='Time spend predict processing request',
                        namespace='BENTOML')
 
+probs_gauge = Gauge(name="predict_probs_rate",
+                    documentation='["class"]',
+                    namespace='BENTOML')
 
 @bentoml.env(pip_packages=["torch", "torchvision", "imageio==2.10.3"])
 @bentoml.artifacts([PytorchModelArtifact('model')])
@@ -29,5 +32,6 @@ class PytorchModelService(bentoml.BentoService):
         outputs = self.artifacts.model(x)
         _, output_classes = outputs.max(dim=1)
         probs = torch.max(f.softmax(outputs))
+        probs_gauge.labels(class=output_classes.item()).set(probs.item())
         return {"probs": "{:.1%}".format(probs.item()),
                 "output_classes": output_classes.item()}
