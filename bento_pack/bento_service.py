@@ -12,7 +12,8 @@ REQUEST_TIME = Summary(name='predict_request_processing_time',
                        namespace='BENTOML')
 
 probs_gauge = Gauge(name="predict_probs_rate",
-                    documentation='["class"]',
+                    documentation='predict probs rate',
+                    labelnames=['class'],
                     namespace='BENTOML')
 
 @bentoml.env(pip_packages=["torch", "torchvision", "imageio==2.10.3"])
@@ -32,6 +33,6 @@ class PytorchModelService(bentoml.BentoService):
         outputs = self.artifacts.model(x)
         _, output_classes = outputs.max(dim=1)
         probs = torch.max(f.softmax(outputs))
-        probs_gauge.labels(class=output_classes.item()).set(probs.item())
+        probs_gauge.labels(output_classes.item()).set(float(probs.item()))
         return {"probs": "{:.1%}".format(probs.item()),
                 "output_classes": output_classes.item()}
