@@ -13,3 +13,4 @@ models/*
 .gitconfig
 __pycache__
 !*.dvc
+*.png

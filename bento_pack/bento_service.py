@@ -4,8 +4,10 @@ from src.models.net import Net
 from bentoml.adapters import ImageInput
 from bentoml.frameworks.pytorch import PytorchModelArtifact
 from prometheus_client import Summary, Gauge, Counter
+import imageio
 import torch
 import torch.nn.functional as f
+import imageio
 
 REQUEST_TIME = Summary(name='predict_request_processing_time',
                        documentation='Time spend predict processing request',
@@ -27,12 +29,14 @@ class PytorchModelService(bentoml.BentoService):
                                    transforms.Normalize((0.1307,), (0.3081,))])
 
     @REQUEST_TIME.time()
-    @bentoml.api(input=ImageInput(), batch=False)
-    def predict(self, img):
-        x = self.transform(img)
-        outputs = self.artifacts.model(x)
-        _, output_classes = outputs.max(dim=1)
-        probs = torch.max(f.softmax(outputs))
-        probs_gauge.labels(output_classes.item()).set(float(probs.item()))
-        return {"probs": "{:.1%}".format(probs.item()),
-                "output_classes": output_classes.item()}
+    @bentoml.api(input=ImageInput(), batch=True)
+    def predict(self, image_arrays: List[imageio.core.util.Array]) -> List[str]:
+        result = []
+        for x in image_arrays:
+            x = self.transform(x)
+            outputs = self.artifacts.model(x)
+            _, output_classes = outputs.max(dim=1)
+            probs = torch.max(f.softmax(outputs))
+            probs_gauge.labels(output_classes.item()).set(float(probs.item()))
+            result.appeld({"probs": "{:.1%}".format(probs.item()), "classes": output_classes.item()})
+        return result
