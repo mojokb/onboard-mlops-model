@@ -38,5 +38,5 @@ class PytorchModelService(bentoml.BentoService):
             _, output_classes = outputs.max(dim=1)
             probs = torch.max(f.softmax(outputs))
             probs_gauge.labels(output_classes.item()).set(float(probs.item()))
-            result.appeld({"probs": "{:.1%}".format(probs.item()), "classes": output_classes.item()})
+            result.append({"probs": "{:.1%}".format(probs.item()), "classes": output_classes.item()})
         return result
