@@ -6,34 +6,33 @@ from src.models.onboard_dataset import OnboardDataset
 
 
 class TestModel:
-    def __init__(self, workdir_base='/workdir'):
+    def __init__(self, model_path="/workdir/models/model.pt", dataset_path="/workdir/data/processed/test_set.npz"):
         self.classes = 10
-        no_cuda = True
-        use_cuda = not no_cuda and torch.cuda.is_available()
         torch.manual_seed(1)
-        self.device = torch.device("cuda" if use_cuda else "cpu")
-        kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
+        self.device = torch.device("cpu")
+        self.model_path = model_path
+        self.dataset_path = dataset_path
+        self._load_model()
 
-        mnist_transform = transforms.Compose([
+    def _load_model(self):
+        self.model = torch.load(self.model_path)
+
+    def test(self):
+        transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.1307,), (0.3081,))
         ])
+        test_batch_size = 256
+        test_loader = torch.utils.data.DataLoader(
+            OnboardDataset(path=self.dataset_path,
+                           transform=transform),
+            batch_size=test_batch_size, shuffle=True)
 
-        test_batch_size = 1000
-        self.test_loader = torch.utils.data.DataLoader(
-            OnboardDataset(path=f'{workdir_base}/data/processed/test_set.npz', 
-                           transform=mnist_transform),
-            batch_size=test_batch_size, shuffle=True, **kwargs)
-
-    def load_model(self, path="/workdir/models/model.pt"):
-        self.model = torch.load(path)
-
-    def test(self):
         self.model.eval()
         predictions_list = []
         labels_list = []
         with torch.no_grad():
-            for data, target in self.test_loader:
+            for data, target in test_loader:
                 data, target = data.to(self.device), target.to(self.device)
                 labels_list.append(target)
                 output = self.model(data)
@@ -52,7 +51,7 @@ class TestModel:
 
 
 if __name__ == "__main__":
-    test_model = TestModel(testset_base=".")
-    test_model.load_model("./model/model.pt")
+    test_model = TestModel(model_path="/Users/kb/PycharmProjects/mlflow-test/model.pt",
+                           dataset_path="/Users/kb/PycharmProjects/mlflow-test/train_set2.npz")
     print(test_model.test())
 
