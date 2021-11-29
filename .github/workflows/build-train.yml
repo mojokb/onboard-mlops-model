@@ -1,12 +1,14 @@
 # This is a basic workflow that is manually triggered
 
-name: train
+name: build-train
 on:
   push:
     branches:
       - 'train/*'
     paths:
-      - 'model/*.dvc'      
+      - 'models/*.dvc'      
+      - 'data/processed/*.dvc'  
+      - 'bento_pack/*.py'   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
@@ -40,12 +42,16 @@ jobs:
             spec:
               arguments:
                 parameters:
+                  - name: servicename 
+                    value: "train-${GITHUB_REPOSITORY#*/}"
                   - name: branch
                     value: "$GITHUB_REF_NAME"
                   - name: remote_repo
                     value: "https://github.com/mojokb/onboard-mlops-model.git"
                   - name: image
                     value: "192.168.64.5:30000/bentoml-torch:$GITHUB_SHA"        
+                  - name: hash
+                    value: "$GITHUB_SHA"        
         EOF    
     - name: cat kustomization.yaml
       run: cat kustomization.yaml         

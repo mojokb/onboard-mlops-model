@@ -1,7 +1,10 @@
-dataset/*
-model/*
-!dataset/README.md
-!model/README.md
+data/raw
+data/MNIST
+data/processed/*.npz
+!data/README.md
+!data/processed/README.md
+models/*
+!models/README.md
 .ipynb_checkpoints
 .ipython
 .jupyter
@@ -10,3 +13,4 @@ model/*
 .gitconfig
 __pycache__
 !*.dvc
+*.png
