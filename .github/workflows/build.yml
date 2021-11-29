@@ -50,9 +50,9 @@ jobs:
                     value: "https://github.com/mojokb/onboard-mlops-model.git"
                   - name: image
                     value: "192.168.64.5:30000/bentoml-torch:$GITHUB_SHA"        
-                  - name: hash 
+                  - name: hash
                     value: "$GITHUB_SHA"        
-       EOF    
+        EOF    
     - name: cat kustomization.yaml
       run: cat kustomization.yaml         
     - name: Kustomize Build
