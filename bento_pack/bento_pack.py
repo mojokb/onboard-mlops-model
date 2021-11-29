@@ -3,6 +3,7 @@ import torch
 from src.models.net import Net
 from bento_service import PytorchModelService
 
+
 BENTO_PACK_PATH = '/workdir/bentoml'
 PATH = './models/model.pt'
 
