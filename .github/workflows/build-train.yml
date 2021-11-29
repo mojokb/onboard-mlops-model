@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: build
+name: build-train
 on:
   push:
     branches:
@@ -43,7 +43,7 @@ jobs:
               arguments:
                 parameters:
                   - name: servicename 
-                    value: "${GITHUB_REPOSITORY#*/}"
+                    value: "train-${GITHUB_REPOSITORY#*/}"
                   - name: branch
                     value: "$GITHUB_REF_NAME"
                   - name: remote_repo

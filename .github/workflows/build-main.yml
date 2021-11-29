@@ -1,0 +1,67 @@
+# This is a basic workflow that is manually triggered
+
+name: build-main
+on:
+  push:
+    branches:
+      - 'main'
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out my other private repo
+      uses: actions/checkout@master
+      with:
+        repository: mojokb/onboard-mlops-manifest
+        token: ${{ secrets.TOKEN }}    
+    - name: set git config
+      run: |
+        git config --global user.email "amaramusic@gmail.com"
+        git config --global user.name "mojokb"
+    - name: set workflow meta 1
+      run: |
+        cat <<EOF > kustomization.yaml
+          nameSuffix: "-$GITHUB_SHA"  # maybe replace ssh
+          resources:
+          - workflow.yaml
+          patchesStrategicMerge:
+          - patch.yaml        
+        EOF    
+    - name: set workflow patch.yaml
+      run: |
+        cat <<EOF > patch.yaml
+            apiVersion: argoproj.io/v1alpha1
+            kind: Workflow
+            metadata:
+              name: dag-model-serving
+            spec:
+              arguments:
+                parameters:
+                  - name: servicename 
+                    value: "${GITHUB_REPOSITORY#*/}"
+                  - name: branch
+                    value: "$GITHUB_REF_NAME"
+                  - name: remote_repo
+                    value: "https://github.com/mojokb/onboard-mlops-model.git"
+                  - name: image
+                    value: "192.168.64.5:30000/bentoml-torch:$GITHUB_SHA"        
+                  - name: hash
+                    value: "$GITHUB_SHA"        
+        EOF    
+    - name: cat kustomization.yaml
+      run: cat kustomization.yaml         
+    - name: Kustomize Build
+      uses: karancode/kustomize-github-action@master
+      with:
+        kustomize_version: '3.0.0'      
+        kustomize_comment: true
+        kustomize_output_file: "deploy/workflow.yaml"
+    - name: check for changes
+      run: git status
+    - name: stage changed files
+      run: git add .
+    - name: commit changed files
+      run: git commit -m "${{ github.event.head_commit.message }}"
+    - name: push code to main
+      run: git push
