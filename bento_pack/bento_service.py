@@ -18,6 +18,10 @@ probs_gauge = Gauge(name="predict_probs_rate",
                     labelnames=['class'],
                     namespace='BENTOML')
 
+FASHION_MNIST_CLASSES = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+                         'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+
+
 @bentoml.env(pip_packages=["torch", "torchvision", "imageio==2.10.3"])
 @bentoml.artifacts([PytorchModelArtifact('model')])
 class PytorchModelService(bentoml.BentoService):
@@ -38,5 +42,5 @@ class PytorchModelService(bentoml.BentoService):
             _, output_classes = outputs.max(dim=1)
             probs = torch.max(f.softmax(outputs))
             probs_gauge.labels(output_classes.item()).set(float(probs.item()))
-            result.append({"probs": "{:.1%}".format(probs.item()), "classes": output_classes.item()})
+            result.append({"probs": "{:.1%}".format(probs.item()), "classes": FASHION_MNIST_CLASSES[output_classes.item()]})
         return result
