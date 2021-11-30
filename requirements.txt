@@ -12,3 +12,4 @@ torch_vision
 scikit-learn
 opencv-python
 boto3==1.19.12
+h5py
