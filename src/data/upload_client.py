@@ -39,7 +39,9 @@ class UploadClient:
                 bucket_name=self.bucket_name,
                 object_name=f"{object_prefix}/{file_name}",
                 file_path=os.path.join(image_path, file_name))
-        data = {'bucket_name': self.bucket_name, 'object_prefix': f'{object_prefix}/'}
+        data = {'bucket_name': self.bucket_name, 
+                'object_prefix': f'{object_prefix}/', 
+                'data_split': 'train_test'}
         headers = {'Content-Type': 'application/json; charset=utf-8'}
         res = requests.post(self.push_event_url, headers=headers, data=json.dumps(data))
         print(res)
@@ -56,4 +58,4 @@ class UploadClient:
 if __name__ == "__main__":
     client = UploadClient(bucket_name="torch-raw-images", 
                           push_event_url="http://192.168.64.5:32252/example")
-    client.upload("/Users/kb/PycharmProjects/labelers_sdk_test/download/train")
+    client.upload("/Users/kb/PycharmProjects/labelers_sdk_test/download")

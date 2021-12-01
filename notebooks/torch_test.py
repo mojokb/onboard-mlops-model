@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[49]:
+# In[29]:
 
 
 import os
@@ -16,13 +16,12 @@ from itertools import chain
 from sklearn.metrics import f1_score
 
 
-# In[55]:
+# In[30]:
 
 
 class TrainModel:
     def __init__(self):
         self.classes = 10
-        torch.manual_seed(1)
         self.train_set = None
         self.valid_set = None
         self.device = torch.device("cpu")
@@ -36,12 +35,22 @@ class TrainModel:
         self.train_loader = None
         self.valid_loader = None
         self._set_transform()
+        
+        
+    def _concat_data_loader(self, dataset_param, batch_size):
+        if isinstance(dataset_param, list):
+            loader_list = []
+            for dataset in self.train_set:
+                loader.append(OnboardDataset(path=dataset))
+            concat_dataset = torch.utils.data.ConcatDataset(loader)    
+            return DataLoader(concat_dataset, batch_size=batch_size, shuffle=True)
+        else:
+            return DataLoader(OnboardDataset(path=self.train_set, transform=self.transform),
+                                           batch_size=batch_size, shuffle=True)
 
     def _set_data_loader(self):
-        self.train_loader = DataLoader(OnboardDataset(path=self.train_set, transform=self.transform),
-                                       batch_size=self.train_batch_size, shuffle=True)
-        self.valid_loader = DataLoader(OnboardDataset(path=self.valid_set, transform=self.transform),
-                                       batch_size=self.valid_batch_size, shuffle=True)
+        self.train_loader = self._concat_data_loader(self.train_set, self.train_batch_size)
+        self.valid_loader = sefl._concat_data_loader(self.valid_set, self.valid_batch_size)
 
     def _set_transform(self):
         self.transform = transforms.Compose([
@@ -122,22 +131,26 @@ class TrainModel:
         torch.save(self.model, os.path.join(save_model_path, "model.pt"))
 
 
-# In[56]:
+# In[32]:
 
 
 if __name__ == "__main__":
     train_model = TrainModel()
-    train_model.load_model("./models/model.pt")
-    print(train_model.test("./data/processed/test_set.npz"))
-    '''
-    train_model.train(epochs=2, lr=0.01,
-                      train_set="./data/processed/train_set.npz",
-                      valid_set="./data/processed/valid_set.npz")
-    train_model.save_model(save_model_path="./models/")
-    '''
+    train_model.train(epochs=3, lr=0.01,
+                      train_set=["../data/processed/train_set.npz", "../data/processed/train_set.npz"],
+                      valid_set="../data/processed/valid_set.npz")
+    train_model.save_model(save_model_path="../models/")
+    
+    train_model.test("../data/processed/20211201-131133/train_set.npz")    
 
 
-# In[57]:
+# In[25]:
+
+
+
+
+
+# In[ ]:
 
 
 # for convert .ipynb to .py 
