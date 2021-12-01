@@ -1,4 +1,4 @@
 outs:
-- md5: 16ffad4d9b2ec13a41d003d979002c80
-  size: 7850490
+- md5: b03ab4d7ec65701ee073afce043d1df6
+  size: 4255690
   path: test_set.npz

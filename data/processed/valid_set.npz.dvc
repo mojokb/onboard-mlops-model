@@ -1,4 +1,4 @@
 outs:
-- md5: cb7f1075a3587af69326c74f1441d3f7
-  size: 7850490
+- md5: 97afbb5471f079902a028ac856804c2e
+  size: 4728490
   path: valid_set.npz

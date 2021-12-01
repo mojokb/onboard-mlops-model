@@ -1,4 +1,4 @@
 outs:
-- md5: 7f915f01ecaeecd4b6280aaef4c0ff47
+- md5: af26b9dec40a56e68ac614cdb8b646fc
   size: 205599
   path: model.pt

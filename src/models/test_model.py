@@ -6,7 +6,8 @@ from src.models.onboard_dataset import OnboardDataset
 
 
 class TestModel:
-    def __init__(self, model_path="/workdir/models/model.pt", dataset_path="/workdir/data/processed/test_set.npz"):
+    def __init__(self, model_path="/workdir/models/model.pt", 
+                 dataset_path="/workdir/data/processed/test_set.npz"):
         self.classes = 10
         torch.manual_seed(1)
         self.device = torch.device("cpu")
