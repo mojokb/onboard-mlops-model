@@ -17,11 +17,9 @@ probs_gauge = Gauge(name="predict_probs_rate",
                     documentation='predict probs rate',
                     labelnames=['class'],
                     namespace='BENTOML')
-
 # FROM labelers project
 FASHION_MNIST_CLASSES = ['Shirt', 'Bag', 'Trouser', 'Dress', 'Sandal', 
                          'Ankelboot', 'Coat', 'Sneaker', 'Tshirt', 'Pullover']
-
 
 @bentoml.env(pip_packages=["torch", "torchvision", "imageio==2.10.3"])
 @bentoml.artifacts([PytorchModelArtifact('model')])
