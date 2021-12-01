@@ -19,7 +19,8 @@ probs_gauge = Gauge(name="predict_probs_rate",
                     namespace='BENTOML')
 
 # FROM labelers project
-FASHION_MNIST_CLASSES = ['Shirt', 'Bag', 'Trouser', 'Dress', 'Sandal', 'Ankelboot', 'Coat', 'Sneaker', 'Tshirt', 'Pullover']
+FASHION_MNIST_CLASSES = ['Shirt', 'Bag', 'Trouser', 'Dress', 'Sandal', 
+                         'Ankelboot', 'Coat', 'Sneaker', 'Tshirt', 'Pullover']
 
 
 @bentoml.env(pip_packages=["torch", "torchvision", "imageio==2.10.3"])
